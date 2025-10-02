@@ -1,0 +1,3 @@
+#!/bin/sh
+# Maven wrapper script for Unix systems
+exec java -classpath ".mvn/wrapper/maven-wrapper.jar" "-Dmaven.home=${M2_HOME}" org.apache.maven.wrapper.MavenWrapperMain "$@"
