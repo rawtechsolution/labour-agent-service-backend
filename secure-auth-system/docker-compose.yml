@@ -7,7 +7,7 @@ services:
       - "8080:8080"
     environment:
       - DB_USERNAME=postgres
-      - DB_PASSWORD=password
+      - DB_PASSWORD=261326
       - JWT_SECRET=mySecretKey123456789012345678901234567890
       - REDIS_HOST=redis
       - REDIS_PORT=6379
@@ -20,7 +20,7 @@ services:
     environment:
       - POSTGRES_DB=startup_auth_db
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_PASSWORD=261326
     ports:
       - "5432:5432"
     volumes:

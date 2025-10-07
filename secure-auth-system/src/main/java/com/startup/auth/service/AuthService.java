@@ -16,6 +16,7 @@ import com.startup.auth.security.JwtUtils;
 import com.startup.auth.security.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -34,13 +35,21 @@ import java.util.Set;
 @Transactional
 public class AuthService {
 
-    private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final SessionRepository sessionRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtils jwtUtils;
-    private final SessionService sessionService;
+    @Autowired
+    private  AuthenticationManager authenticationManager;
+    @Autowired
+    private  UserRepository userRepository;
+    @Autowired
+    private  RoleRepository roleRepository;
+    @Autowired
+    private  SessionRepository sessionRepository;
+    @Autowired
+    private  PasswordEncoder passwordEncoder;
+    @Autowired
+    private  JwtUtils jwtUtils;
+    @Autowired
+    private  SessionService sessionService;
+
 
     public AuthResponse registerUser(RegisterRequest registerRequest) {
         // Check if user already exists
@@ -98,7 +107,7 @@ public class AuthService {
 
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
         User user = userRepository.findById(userPrincipal.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException("User id not found " + userPrincipal.getId()));
 
         // Update last login
         user.setLastLogin(LocalDateTime.now());
@@ -170,9 +179,7 @@ public class AuthService {
 
     public void logout(String refreshToken) {
         Optional<Session> sessionOpt = sessionRepository.findByRefreshTokenAndRevokedFalse(refreshToken);
-        if (sessionOpt.isPresent()) {
-            sessionService.revokeSession(sessionOpt.get().getId());
-        }
+        sessionOpt.ifPresent(session -> sessionService.revokeSession(session.getId()));
     }
 
     public void logoutFromAllDevices(Long userId) {

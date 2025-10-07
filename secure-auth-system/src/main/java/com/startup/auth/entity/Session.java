@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.net.InetAddress;
 import java.time.LocalDateTime;
 
 @Entity
@@ -35,7 +36,7 @@ public class Session {
     private String deviceInfo;
 
     @Column(name = "ip_address")
-    private String ipAddress;
+    private InetAddress ipAddress;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
