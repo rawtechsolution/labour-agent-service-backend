@@ -2,7 +2,7 @@
 
 ## Base URL
 ```
-http://localhost:8080/api/v1
+http://localhost:8080/
 ```
 
 ## Authentication
@@ -173,7 +173,7 @@ Health check endpoint.
 
 **Register User:**
 ```bash
-curl -X POST http://localhost:8080/api/v1/auth/register \
+curl -X POST http://localhost:8080/auth/register \
   -H "Content-Type: application/json" \
   -d '{
     "email": "user@example.com",
@@ -184,7 +184,7 @@ curl -X POST http://localhost:8080/api/v1/auth/register \
 
 **Login:**
 ```bash
-curl -X POST http://localhost:8080/api/v1/auth/login \
+curl -X POST http://localhost:8080/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "user@example.com",
@@ -194,7 +194,7 @@ curl -X POST http://localhost:8080/api/v1/auth/login \
 
 **Access Protected Resource:**
 ```bash
-curl -X GET http://localhost:8080/api/v1/protected-endpoint \
+curl -X GET http://localhost:8080/protected-endpoint \
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIs..."
 ```
 
@@ -202,7 +202,7 @@ curl -X GET http://localhost:8080/api/v1/protected-endpoint \
 
 **Register User:**
 ```javascript
-const response = await fetch('http://localhost:8080/api/v1/auth/register', {
+const response = await fetch('http://localhost:8080/auth/register', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ console.log(data);
 
 **Login:**
 ```javascript
-const response = await fetch('http://localhost:8080/api/v1/auth/login', {
+const response = await fetch('http://localhost:8080/auth/login', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -265,7 +265,7 @@ axios.interceptors.response.use(
             const refreshToken = localStorage.getItem('refreshToken');
             if (refreshToken) {
                 try {
-                    const response = await fetch('/api/v1/auth/refresh-token', {
+                    const response = await fetch('/auth/refresh-token', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ refreshToken })
